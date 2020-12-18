@@ -4,7 +4,6 @@ var Service, Characteristic;
 
 const gpio = require('pigpio').Gpio;
 const converter = require('color-convert');
-const fs = require('fs');
 
 module.exports = function(homebridge) {
 	Service = homebridge.hap.Service;
@@ -30,11 +29,9 @@ function SmartLedStripAccessory(log, config) {
       throw new Error("gPin not set!")
     if (!this.bPin)
       throw new Error("bPin not set!")
-    if (!fs.existsSync('/dev/pi-blaster'))
-      throw new Error("/dev/pi-blaster does not exist!")
   } catch (err) {
     this.log("An error has been thrown! " + err);
-    this.log("homebridge-gpio-rgb-ledstrip won't work until you fix this problem");
+    this.log("homebridge-pigpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
   this.rLed = new Gpio(rPin, {mode: Gpio.OUTPUT});
