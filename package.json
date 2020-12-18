@@ -16,8 +16,8 @@
     "url": "https://github.com/adamlechowicz/homebridge-pigpio-rgb-ledstrip/issues"
   },
   "funding": {
-    "type" : "paypal",
-    "url" : "https://www.paypal.com/donate?hosted_button_id=D499W6D3MKYSY"
+    "type": "paypal",
+    "url": "https://www.paypal.com/donate?hosted_button_id=D499W6D3MKYSY"
   },
   "homepage": "https://github.com/adamlechowicz/homebridge-pigpio-rgb-ledstrip#readme",
   "keywords": [
