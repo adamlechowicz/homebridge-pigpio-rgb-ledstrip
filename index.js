@@ -20,7 +20,7 @@ function SmartLedStripAccessory(log, config) {
   this.gPin     = config['gPin'];
   this.bPin     = config['bPin'];
 
-  this.enabled = true ;
+  this.enabled = true;
 
   try {
     if (!this.rPin)
@@ -34,9 +34,9 @@ function SmartLedStripAccessory(log, config) {
     this.log("homebridge-pigpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
-  this.rLed = new gpio(rPin, {mode: Gpio.OUTPUT});
-  this.gLed = new gpio(gPin, {mode: Gpio.OUTPUT});
-  this.bLed = new gpio(bPin, {mode: Gpio.OUTPUT});
+  this.rLed = new gpio(this.rPin, {mode: Gpio.OUTPUT});
+  this.gLed = new gpio(this.gPin, {mode: Gpio.OUTPUT});
+  this.bLed = new gpio(this.bPin, {mode: Gpio.OUTPUT});
 
 }
 
