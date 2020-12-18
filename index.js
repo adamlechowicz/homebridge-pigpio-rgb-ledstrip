@@ -2,7 +2,7 @@
 
 var Service, Characteristic;
 
-const gpio = require('pigpio').Gpio;
+const Pigpio = require('../js-pigpio/index.js');
 const converter = require('color-convert');
 
 module.exports = function(homebridge) {
@@ -34,9 +34,7 @@ function SmartLedStripAccessory(log, config) {
     this.log("homebridge-pigpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
-  this.rLed = new gpio(this.rPin, {mode: gpio.OUTPUT});
-  this.gLed = new gpio(this.gPin, {mode: gpio.OUTPUT});
-  this.bLed = new gpio(this.bPin, {mode: gpio.OUTPUT});
+  this.gpio = new Pigpio()
 
 }
 
@@ -121,9 +119,9 @@ SmartLedStripAccessory.prototype = {
   updateRGB : function(red, green, blue)
   {
       this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      this.rLed.pwmWrite(red);
-      this.gLed.pwmWrite(green);
-      this.bLed.pwmWrite(blue);
+      this.gpio.set_PWM_dutycycle(this.rPin, red);
+      this.gpio.set_PWM_dutycycle(this.gPin, green);
+      this.gpio.set_PWM_dutycycle(this.bPin, blue);
   }
 
 }
