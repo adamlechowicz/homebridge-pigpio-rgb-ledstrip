@@ -2,7 +2,7 @@
 
 var Service, Characteristic;
 
-const Pigpio = require('../js-pigpio/index.js');
+const Pigpio = require('js-pigpio');
 const converter = require('color-convert');
 
 module.exports = function(homebridge) {
