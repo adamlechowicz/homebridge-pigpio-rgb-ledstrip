@@ -123,9 +123,9 @@ SmartLedStripAccessory.prototype = {
       let rString = "pigs p " + this.rPin + " " + red;
       let gString = "pigs p " + this.gPin + " " + green;
       let bString = "pigs p " + this.bPin + " " + blue;
-      execSync(rString, { encoding: 'utf-8' }); 
-      execSync(gString, { encoding: 'utf-8' }); 
-      execSync(bString, { encoding: 'utf-8' }); 
+      execSync(rString, { encoding: 'utf-8' });
+      execSync(gString, { encoding: 'utf-8' });
+      execSync(bString, { encoding: 'utf-8' });
       //this.gpio.set_PWM_dutycycle(this.rPin, red);
       //this.gpio.set_PWM_dutycycle(this.gPin, green);
       //this.gpio.set_PWM_dutycycle(this.bPin, blue);
