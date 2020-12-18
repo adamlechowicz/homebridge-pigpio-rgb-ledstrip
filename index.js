@@ -34,9 +34,9 @@ function SmartLedStripAccessory(log, config) {
     this.log("homebridge-pigpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
-  this.rLed = new Gpio(rPin, {mode: Gpio.OUTPUT});
-  this.gLed = new Gpio(gPin, {mode: Gpio.OUTPUT});
-  this.bLed = new Gpio(bPin, {mode: Gpio.OUTPUT});
+  this.rLed = new gpio(rPin, {mode: Gpio.OUTPUT});
+  this.gLed = new gpio(gPin, {mode: Gpio.OUTPUT});
+  this.bLed = new gpio(bPin, {mode: Gpio.OUTPUT});
 
 }
 
