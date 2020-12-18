@@ -3,6 +3,7 @@
 var Service, Characteristic;
 
 const Pigpio = require('js-pigpio');
+const execSync = require('child_process').execSync;
 const converter = require('color-convert');
 
 module.exports = function(homebridge) {
@@ -119,9 +120,15 @@ SmartLedStripAccessory.prototype = {
   updateRGB : function(red, green, blue)
   {
       this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      this.gpio.set_PWM_dutycycle(this.rPin, red);
-      this.gpio.set_PWM_dutycycle(this.gPin, green);
-      this.gpio.set_PWM_dutycycle(this.bPin, blue);
+      let rString = "pigs p " + this.rPin + " " + red;
+      let gString = "pigs p " + this.gPin + " " + green;
+      let bString = "pigs p " + this.bPin + " " + blue;
+      execSync(rString, { encoding: 'utf-8' }); 
+      execSync(gString, { encoding: 'utf-8' }); 
+      execSync(bString, { encoding: 'utf-8' }); 
+      //this.gpio.set_PWM_dutycycle(this.rPin, red);
+      //this.gpio.set_PWM_dutycycle(this.gPin, green);
+      //this.gpio.set_PWM_dutycycle(this.bPin, blue);
   }
 
 }
