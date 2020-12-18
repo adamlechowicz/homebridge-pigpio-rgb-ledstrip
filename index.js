@@ -2,7 +2,7 @@
 
 var Service, Characteristic;
 
-const piblaster = require('pi-blaster.js');
+const gpio = require('pigpio').Gpio;
 const converter = require('color-convert');
 const fs = require('fs');
 
@@ -37,6 +37,9 @@ function SmartLedStripAccessory(log, config) {
     this.log("homebridge-gpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
+  this.rLed = new Gpio(rPin, {mode: Gpio.OUTPUT});
+  this.gLed = new Gpio(gPin, {mode: Gpio.OUTPUT});
+  this.bLed = new Gpio(bPin, {mode: Gpio.OUTPUT});
 
 }
 
@@ -48,9 +51,9 @@ SmartLedStripAccessory.prototype = {
       let informationService = new Service.AccessoryInformation();
 
       informationService
-      .setCharacteristic(Characteristic.Manufacturer, 'Manfredi Pistone')
-      .setCharacteristic(Characteristic.Model, 'GPIO-RGB-LedStrip')
-      .setCharacteristic(Characteristic.SerialNumber, '06-06-00');
+      .setCharacteristic(Characteristic.Manufacturer, 'Adam Lechowicz')
+      .setCharacteristic(Characteristic.Model, 'PiGPIO-RGB-LedStrip')
+      .setCharacteristic(Characteristic.SerialNumber, '05-05-18');
 
       let smartLedStripService = new Service.Lightbulb(this.name);
 
@@ -73,11 +76,11 @@ SmartLedStripAccessory.prototype = {
       this.informationService = informationService;
       this.smartLedStripService = smartLedStripService;
 
-      this.log("SmartLedStrip has been successfully initialized!");
+      this.log("SmartLEDStrip has been successfully initialized!");
 
       return [informationService, smartLedStripService];
     }else{
-      this.log("SmartLedStrip has not been initialized, please check your logs..");
+      this.log("SmartLEDStrip has not been initialized, please check your logs..");
       return [];
     }
 
@@ -121,9 +124,9 @@ SmartLedStripAccessory.prototype = {
   updateRGB : function(red, green, blue)
   {
       this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      piblaster.setPwm(this.rPin, red/255);
-      piblaster.setPwm(this.gPin, green/255);
-      piblaster.setPwm(this.bPin, blue/255);
+      this.rLed.pwmWrite(red);
+      this.gLed.pwmWrite(green);
+      this.bLed.pwmWrite(blue);
   }
 
 }
