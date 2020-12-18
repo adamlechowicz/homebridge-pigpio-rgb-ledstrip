@@ -9,10 +9,10 @@ module.exports = function(homebridge) {
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
 
-	homebridge.registerAccessory('homebridge-pigpio-rgb-ledstrip', 'SmartLEDStrip', SmartLEDStripAccessory);
+	homebridge.registerAccessory('homebridge-pigpio-rgb-ledstrip', 'SmartLedStrip', SmartLedStripAccessory);
 }
 
-function SmartLEDStripAccessory(log, config) {
+function SmartLedStripAccessory(log, config) {
   this.log      = log;
   this.name     = config['name'];
 
@@ -38,7 +38,7 @@ function SmartLEDStripAccessory(log, config) {
 
 }
 
-SmartLEDStripAccessory.prototype = {
+SmartLedStripAccessory.prototype = {
 
   getServices : function(){
 
