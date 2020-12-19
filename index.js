@@ -120,12 +120,8 @@ SmartLedStripAccessory.prototype = {
   updateRGB : function(red, green, blue)
   {
       this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      let rString = "pigs p " + this.rPin + " " + red;
-      let gString = "pigs p " + this.gPin + " " + green;
-      let bString = "pigs p " + this.bPin + " " + blue;
-      execSync(rString, { encoding: 'utf-8' });
-      execSync(gString, { encoding: 'utf-8' });
-      execSync(bString, { encoding: 'utf-8' });
+      let cString = "pigs p " + this.rPin + " " + red + " p " + this.gPin + " " + green + " p " + this.bPin + " " + blue;
+      execSync(cString, { encoding: 'utf-8' });
       //this.gpio.set_PWM_dutycycle(this.rPin, red);
       //this.gpio.set_PWM_dutycycle(this.gPin, green);
       //this.gpio.set_PWM_dutycycle(this.bPin, blue);
