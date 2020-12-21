@@ -25,6 +25,7 @@ function SmartLedStripAccessory(log, config) {
   this.gPin     = config['gPin'];
   this.bPin     = config['bPin'];
 
+
   this.enabled = true;
 
   try {
@@ -114,12 +115,8 @@ SmartLedStripAccessory.prototype = {
     if(this.enabled){
       if(!this.isOn())
       {
-        var brightness = this.getBrightness();
-        while (brightness != 0){
-          var rgb = converter.hsv.rgb([this.getHue(), this.getSaturation(), brightness-5]);
-          this.updateRGB(rgb[0], rgb[1], rgb[2]);
-        }
-        this.updateRGB(0,0,0);
+          this.updateRGB(0,0,0);
+          return;
       }
 
       var brightness = this.getBrightness();
