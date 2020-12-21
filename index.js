@@ -139,9 +139,9 @@ SmartLedStripAccessory.prototype = {
       let curB = this.currentB;
       this.log("Setting RGB values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
       while(curR !== red || curG !== green || curB !== blue) {
-        curR = red !== curR ? ((red - curR < 0) ? curR - 1 : curR + 1) : curR;
-        curG = green !== curG ? ((green - curG < 0) ? curG - 1 : curG + 1) : curG;
-        curB = blue !== curB ? ((blue - curB < 0) ? curB - 1 : curB + 1) : curB;
+        curR = (red !== curR) ? ((red - curR < 0) ? curR - 1 : curR + 1) : curR;
+        curG = (green !== curG) ? ((green - curG < 0) ? curG - 1 : curG + 1) : curG;
+        curB = (blue !== curB) ? ((blue - curB < 0) ? curB - 1 : curB + 1) : curB;
         this.rLed.analogWrite(red);
         this.gLed.analogWrite(green);
         this.bLed.analogWrite(blue);
