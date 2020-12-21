@@ -1,7 +1,7 @@
 {
   "name": "homebridge-pigpio-rgb-ledstrip",
   "description": "Raspberry Pi PiGPIO based LED Strip plugin for Homebridge",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Adam Lechowicz",
   "license": "GPL-3.0-only",
   "main": "index.js",
@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "color-convert": "^2.0.0",
-    "js-pigpio": "^1.5.0"
+    "pigpio-client": "^1.5.0"
   }
 }

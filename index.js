@@ -2,9 +2,14 @@
 
 var Service, Characteristic;
 
-const Pigpio = require('js-pigpio');
-const execSync = require('child_process').execSync;
+const pigpio = require('pigpio-client').pigpio();
+//const execSync = require('child_process').execSync;
 const converter = require('color-convert');
+
+const ready = new Promise((resolve, reject) => {
+  pigpio.once('connected', resolve);
+  pigpio.once('error', reject);
+});
 
 module.exports = function(homebridge) {
 	Service = homebridge.hap.Service;
@@ -35,7 +40,24 @@ function SmartLedStripAccessory(log, config) {
     this.log("homebridge-pigpio-rgb-ledstrip won't work until you fix this problem");
     this.enabled = false;
   }
-  this.gpio = new Pigpio()
+
+  ready.then(async (info) => {
+    // display information on pigpio and connection status
+    console.log(JSON.stringify(info,null,2));
+   
+    // control LEDs
+    this.rLed = pigpio.gpio(this.rPin);
+    this.gLed = pigpio.gpio(this.gPin);
+    this.bLed = pigpio.gpio(this.bPin);
+    /*
+    // use waves to blink the LED rapidly (toggle every 100ms)
+    await led.waveClear();
+    await led.waveAddPulse([[1, 0, 100000], [0, 1, 100000]]);
+    const blinkWave = await led.waveCreate();
+    led.waveChainTx([{loop: true}, {waves: [blinkWave]}, {repeat: true}]);*/
+   
+  }).catch(console.error);
+
 
 }
 
@@ -120,11 +142,11 @@ SmartLedStripAccessory.prototype = {
   updateRGB : function(red, green, blue)
   {
       this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      let cString = "pigs p " + this.rPin + " " + red + " p " + this.gPin + " " + green + " p " + this.bPin + " " + blue;
-      execSync(cString, { encoding: 'utf-8' });
-      //this.gpio.set_PWM_dutycycle(this.rPin, red);
-      //this.gpio.set_PWM_dutycycle(this.gPin, green);
-      //this.gpio.set_PWM_dutycycle(this.bPin, blue);
+      //let cString = "pigs p " + this.rPin + " " + red + " p " + this.gPin + " " + green + " p " + this.bPin + " " + blue;
+      //execSync(cString, { encoding: 'utf-8' });
+      this.rLed.analogWrite(red);
+      this.gLed.analogWrite(green);
+      this.bLed.analogWrite(blue);
   }
 
 }
