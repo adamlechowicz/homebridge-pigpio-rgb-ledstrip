@@ -146,6 +146,9 @@ SmartLedStripAccessory.prototype = {
         this.gLed.analogWrite(green);
         this.bLed.analogWrite(blue);
       }
+      this.currentR = curR;
+      this.currentG = curG;
+      this.currentB = curB;
   }
 
 }
