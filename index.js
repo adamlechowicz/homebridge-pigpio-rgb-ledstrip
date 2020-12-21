@@ -3,7 +3,6 @@
 var Service, Characteristic;
 
 const pigpio = require('pigpio-client').pigpio();
-//const execSync = require('child_process').execSync;
 const converter = require('color-convert');
 
 const ready = new Promise((resolve, reject) => {
@@ -26,6 +25,10 @@ function SmartLedStripAccessory(log, config) {
   this.gPin     = config['gPin'];
   this.bPin     = config['bPin'];
 
+  this.curR   = 0;
+  this.curG   = 0;
+  this.curB   = 0;
+
   this.enabled = true;
 
   try {
@@ -42,22 +45,12 @@ function SmartLedStripAccessory(log, config) {
   }
 
   ready.then(async (info) => {
-    // display information on pigpio and connection status
-    console.log(JSON.stringify(info,null,2));
-   
-    // control LEDs
+    // initialize GPIO pins for LEDs
     this.rLed = pigpio.gpio(this.rPin);
     this.gLed = pigpio.gpio(this.gPin);
     this.bLed = pigpio.gpio(this.bPin);
-    /*
-    // use waves to blink the LED rapidly (toggle every 100ms)
-    await led.waveClear();
-    await led.waveAddPulse([[1, 0, 100000], [0, 1, 100000]]);
-    const blinkWave = await led.waveCreate();
-    led.waveChainTx([{loop: true}, {waves: [blinkWave]}, {repeat: true}]);*/
    
   }).catch(console.error);
-
 
 }
 
@@ -141,12 +134,15 @@ SmartLedStripAccessory.prototype = {
 
   updateRGB : function(red, green, blue)
   {
-      this.log("Setting rgb values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      //let cString = "pigs p " + this.rPin + " " + red + " p " + this.gPin + " " + green + " p " + this.bPin + " " + blue;
-      //execSync(cString, { encoding: 'utf-8' });
-      this.rLed.analogWrite(red);
-      this.gLed.analogWrite(green);
-      this.bLed.analogWrite(blue);
+      this.log("Setting RGB values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
+      while(curR !== red || curG !== green || curB !== blue) {
+        curR = curR + ((red - curR)/5);
+        curG = curG + ((green - curG)/5);
+        curB = curB + ((blue - curB)/5);
+        this.rLed.analogWrite(red);
+        this.gLed.analogWrite(green);
+        this.bLed.analogWrite(blue);
+      }
   }
 
 }
