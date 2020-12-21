@@ -134,9 +134,9 @@ SmartLedStripAccessory.prototype = {
 
   updateRGB : function(red, green, blue)
   {
-      curR = this.currentR;
-      curG = this.currentG;
-      curB = this.currentB;
+      let curR = this.currentR;
+      let curG = this.currentG;
+      let curB = this.currentB;
       this.log("Setting RGB values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
       while(curR !== red || curG !== green || curB !== blue) {
         curR = curR + ((red - curR)/5);
