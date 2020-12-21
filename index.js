@@ -25,9 +25,9 @@ function SmartLedStripAccessory(log, config) {
   this.gPin     = config['gPin'];
   this.bPin     = config['bPin'];
 
-  this.curR   = 0;
-  this.curG   = 0;
-  this.curB   = 0;
+  this.currentR   = 0;
+  this.currentG   = 0;
+  this.currentB   = 0;
 
   this.enabled = true;
 
@@ -134,6 +134,9 @@ SmartLedStripAccessory.prototype = {
 
   updateRGB : function(red, green, blue)
   {
+      curR = this.currentR;
+      curG = this.currentG;
+      curB = this.currentB;
       this.log("Setting RGB values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
       while(curR !== red || curG !== green || curB !== blue) {
         curR = curR + ((red - curR)/5);
