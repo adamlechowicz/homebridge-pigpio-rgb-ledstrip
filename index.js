@@ -25,10 +25,6 @@ function SmartLedStripAccessory(log, config) {
   this.gPin     = config['gPin'];
   this.bPin     = config['bPin'];
 
-  this.currentR   = 0;
-  this.currentG   = 0;
-  this.currentB   = 0;
-
   this.enabled = true;
 
   try {
@@ -118,8 +114,12 @@ SmartLedStripAccessory.prototype = {
     if(this.enabled){
       if(!this.isOn())
       {
-          this.updateRGB(0,0,0);
-          return;
+        var brightness = this.getBrightness();
+        while (brightness != 0){
+          var rgb = converter.hsv.rgb([this.getHue(), this.getSaturation(), brightness-5]);
+          this.updateRGB(rgb[0], rgb[1], rgb[2]);
+        }
+        this.updateRGB(0,0,0);
       }
 
       var brightness = this.getBrightness();
@@ -134,21 +134,10 @@ SmartLedStripAccessory.prototype = {
 
   updateRGB : function(red, green, blue)
   {
-      let curR = this.currentR;
-      let curG = this.currentG;
-      let curB = this.currentB;
       this.log("Setting RGB values to: Red: "+red + " Green: "+green+ " Blue: "+blue);
-      while(curR !== red || curG !== green || curB !== blue) {
-        curR = (red !== curR) ? ((red - curR < 0) ? curR - 1 : curR + 1) : curR;
-        curG = (green !== curG) ? ((green - curG < 0) ? curG - 1 : curG + 1) : curG;
-        curB = (blue !== curB) ? ((blue - curB < 0) ? curB - 1 : curB + 1) : curB;
-        this.rLed.analogWrite(red);
-        this.gLed.analogWrite(green);
-        this.bLed.analogWrite(blue);
-      }
-      this.currentR = curR;
-      this.currentG = curG;
-      this.currentB = curB;
+      this.rLed.analogWrite(red);
+      this.gLed.analogWrite(green);
+      this.bLed.analogWrite(blue);
   }
 
 }
